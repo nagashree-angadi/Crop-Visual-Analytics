@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <title>Flask Tutorial</title>
+      <meta charset="UTF-8">
+      <script src="../static/index.js"></script>
+      <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+      <link rel="stylesheet" href="../static/main.css">
+      <title>Crop Visual Analytics</title>
   </head>
   <body>
-    <h1> My First Try Using Flask </h1>
-    <p> Flask is Fun </p>
+     <header class = "header">
+        <h1>Crop Visual Analytics</h1>
+     </header>
+     <div class = "selection">
+             <label for = "crop-selector">Select crop: </label>
+             <select class = "crop-selector" id = "crop-selector" onchange="updateGraphs()">
+                 <option value = "Wheat">Wheat</option>
+                 <option value = "Paddy/Rice">Paddy/Rice</option>
+                 <option value = "Millet">Millet</option>
+                 <option value = "Pulses">Pulses</option>
+                 <option value = "Maize">Maize</option>
+             </select>
+     </div>
+     <div class = "map-chart" id = "map-chart">
+         <h3>Total crop by country</h3>
+
+     </div>
+     <div class = "bar-chart" id = "bar-chart">
+         <h3>Top producers of the crop in the world</h3>
+
+     </div>
+     <div class = "line-chart" id = "line-chart">
+         <h3>Crop production by year</h3>
+
+     </div>
+     <div class = "pie-chart" id = "pie-chart">
+         <h3>Production of crop by continent</h3>
+
+     </div>
+
   </body>
 </html>
