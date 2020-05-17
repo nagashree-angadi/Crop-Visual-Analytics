@@ -58,6 +58,7 @@ def production_by_year():
         crop = "Wheat"
         df = data[data.Type == "Production"]
         df = df[df.Crop == crop][["Year", "Value"]]
+        df = df.groupby("Year").sum().reset_index()
 
         res = []
         for year, value in df.values:
@@ -76,7 +77,18 @@ def crop_by_continent():
     if request.method == 'GET':
         crop = request.args.get('data', 0)
         print(crop)
-        res = ""
+        crop = "Wheat"
+        df = continent_data[continent_data.Type == "Production"]
+        df = df[df.Crop == crop][["Continent", "Value"]]
+        df = df.groupby("Continent").sum().reset_index()
+
+        res = []
+        for continent,value in df.values:
+            res.append(
+            {
+                "continent" : continent,
+                "value" : value
+            })
         return jsonify(res)
 
 # Getting crops to fill the drop down
@@ -90,6 +102,7 @@ if __name__ == "__main__":
 
     # Reading the data
     data = pd.read_csv("./static/Data/PreprocessedData.csv")
+    continent_data = pd.read_csv("./static/Data/PreprocessedDataContinent.csv")
     app.run(debug=True)
 
 
