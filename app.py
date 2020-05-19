@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from flask import Flask, request, jsonify
 from flask import render_template
+import json
 
 app = Flask(__name__)
 
@@ -14,25 +15,27 @@ def home():
 def allcrops_by_country():
     if request.method == 'GET':
 
-        df = data[data.Type == "Yield"].drop(columns=["Country Code", "Crop Code", "Year"])
-        df = df.groupby(["Country"]).sum().reset_index()
-
+        df = data[data.Type == "Yield"][["M49 Code", "Value"]]
+        df = df.groupby(["M49 Code"]).sum().reset_index()
+        
         res = []
         for country,value in df.values:
             res.append(
             {
-                "country" : country,
+                "id" : country,
                 "value" : value
             })
 
-        return jsonify(res)
+        return jsonify({
+            "geodata": countries_geodata,
+            "yeild": res
+        })
 
 # Sending top 20 producers for given crop
 @app.route('/top-producers', methods=['POST', 'GET'])
 def top_producers():
     if request.method == 'GET':
         crop = request.args.get('data',0)
-        crop = "Wheat"
         print(crop)
 
         df = data[data.Type == "Production"]
@@ -55,11 +58,9 @@ def production_by_year():
     if request.method == 'GET':
         crop = request.args.get('data', 0)
         print(crop)
-        crop = "Wheat"
         df = data[data.Type == "Production"]
         df = df[df.Crop == crop][["Year", "Value"]]
         df = df.groupby("Year").sum().reset_index()
-
         res = []
         for year, value in df.values:
             res.append(
@@ -77,7 +78,6 @@ def crop_by_continent():
     if request.method == 'GET':
         crop = request.args.get('data', 0)
         print(crop)
-        crop = "Wheat"
         df = continent_data[continent_data.Type == "Production"]
         df = df[df.Crop == crop][["Continent", "Value"]]
         df = df.groupby("Continent").sum().reset_index()
@@ -103,6 +103,9 @@ if __name__ == "__main__":
     # Reading the data
     data = pd.read_csv("./static/Data/PreprocessedData.csv")
     continent_data = pd.read_csv("./static/Data/PreprocessedDataContinent.csv")
-    app.run(debug=True)
+    geodata_file = open('./static/Data/countries-50m.json',)
+    countries_geodata = json.load(geodata_file)
+    geodata_file.close() 
+    app.run(debug=True, port=8005)
 
 
