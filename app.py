@@ -56,10 +56,10 @@ def top_producers():
 @app.route('/production-by-year', methods=['POST', 'GET'])
 def production_by_year():
     if request.method == 'GET':
-        crop = request.args.get('data', 0)
-        print(crop)
+        country = request.args.get('data', 0)
+        print("*********"+country)
         df = data[data.Type == "Production"]
-        df = df[df.Crop == crop][["Year", "Value"]]
+        df = df[df["M49 Code"] == int(country)][["Year", "Value"]]
         df = df.groupby("Year").sum().reset_index()
         res = []
         for year, value in df.values:
@@ -106,6 +106,6 @@ if __name__ == "__main__":
     geodata_file = open('./static/Data/countries-50m.json',)
     countries_geodata = json.load(geodata_file)
     geodata_file.close() 
-    app.run(debug=True, port=8006)
+    app.run(debug=True, port=8008)
 
 

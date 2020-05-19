@@ -14,7 +14,6 @@ function draw_line(data){
             .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
 
-    num_years = d3.max(data, function(d){ return d.year}) - d3.min(data, function(d){ return d.year})
     var x = d3.scaleBand()
     .domain(data.map(d => d.year))
     .range([0, width])
