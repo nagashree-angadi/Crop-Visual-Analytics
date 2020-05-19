@@ -63,6 +63,8 @@ function draw_bar_chart(input) {
     svg.selectAll(".bar")
         .data(data)
         .enter().append("rect")
+        .transition()
+        .duration(400)
         .attr("class", "bar")
         .attr("x", function (d) { return xScale(d.key); })
         .attr("y", function (d) { return yScale(d.value); })

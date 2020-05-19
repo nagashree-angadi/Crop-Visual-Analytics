@@ -43,6 +43,8 @@ function draw_line(data) {
         .datum(data)
         .attr("fill", "none")
         .attr("stroke", "steelblue")
+        .transition()
+        .duration(100)
         .attr("stroke-width", 1.5)
         .attr("d", d3.line()
             .x(function (d) { return x(d.year) })

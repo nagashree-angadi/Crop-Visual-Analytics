@@ -14,8 +14,6 @@ continent_data = pd.read_csv("./static/Data/PreprocessedDataContinent.csv")
 geodata_file = open('./static/Data/countries-50m.json', )
 soil_data = pd.read_csv("./static/Data/Soil_Microbial_Biomass_C_N_P_spatial.csv", encoding = "ISO-8859-1")
 
-
-
 for col in soil_data.columns:
     if soil_data[col].dtype != 'object':
         soil_data[col] = soil_data[col].fillna(soil_data[col].median())
@@ -47,8 +45,6 @@ def find_intrinsic_dimensions(df):
     result_frame['value'] = eigenvalues
     result_frame['cumulative'] = cumulative
     return result_frame
-
-
 
 @app.route("/")
 def home():
