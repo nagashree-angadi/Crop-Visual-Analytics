@@ -41,9 +41,9 @@ function draw_maps(world, population) {
     // Set tooltips
     var tip = d3.tip()
         .attr('class', 'd3-tip')
-        .offset([0, -5])
+        .offset([0, -1])
         .html(function(d) {
-            return "<strong>Country: </strong><span class='details'>" + d.properties.name + "<br></span>" + "<strong>Population: </strong><span class='details'>" + format(d.population) +"</span>";
+            return "<strong>Country: </strong><span class='details'>" + d.properties.name + "<br></span>" + "<strong>Total Produce: </strong><span class='details'>" + format(d.population) +"</span>";
         })
 
     var mapWidth = document.getElementById("map-chart").offsetWidth;

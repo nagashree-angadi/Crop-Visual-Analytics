@@ -12,10 +12,10 @@ div.map-chart{
     background-color: whitesmoke;
     border: 1px solid #e7e7e7;
     border-radius: 5px;
-    height: 50%;
-    width: 49%;
+    height: 56%;
+    width: 50%;
     position: absolute;
-    top: 15%;
+    top: 8%;
     left: 1%;
 }
 div.bar-chart{
@@ -23,11 +23,11 @@ div.bar-chart{
     background-color: whitesmoke;
     border: 1px solid #e7e7e7;
     border-radius: 5px;
-    width: 48%;
-    height: 50%;
+    width: 47%;
+    height: 47%;
     position: absolute;
-    top: 15%;
-    left: 51%;
+    top: 8%;
+    left: 52%;
 }
 
 div.selection{
@@ -49,7 +49,7 @@ div.line-chart{
     background-color: whitesmoke;
     border: 1px solid #e7e7e7;
     border-radius: 5px;
-    width: 68%;
+    width: 50%;
     height: 33%;
     position: absolute;
     top: 66%;
@@ -60,11 +60,11 @@ div.pie-chart{
     background-color: whitesmoke;
     border: 1px solid #e7e7e7;
     border-radius: 5px;
-    width: 29%;
-    height: 33%;
+    width: 49%;
+    height: 42%;
     position: absolute;
-    top: 66%;
-    left: 70%;
+    top: 57%;
+    left: 52%;
 }
 
 h3{
