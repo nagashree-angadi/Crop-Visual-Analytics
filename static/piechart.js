@@ -64,7 +64,6 @@ function draw_pie_chart(data) {
 	var legendSpacing = 5;
 
 	var legend = svg.selectAll('.legend')
-		
 		.data(color.domain())
 		.enter()
 		.append('g')

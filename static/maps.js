@@ -17,12 +17,12 @@ function draw_maps(world, population) {
         width = mapWidth - margin.left - margin.right,
         height = mapHeight - margin.top - margin.bottom;
 
-    var color = d3.scaleThreshold()
-        .domain([4000000, 10000000, 50000000, 500000000, 900000000,
-            1000000000, 5000000000, 9000000000, 10000000000, 40000000000])
-        .range(["rgb(247,251,255)", "rgb(222,235,247)", "rgb(198,219,239)", "rgb(158,202,225)",
-            "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)",
-            "rgb(8,48,107)", "rgb(3,19,43)"]);
+    // var color = d3.scaleThreshold()
+    //     .domain([4000000, 10000000, 50000000, 500000000, 900000000,
+    //         1000000000, 5000000000, 9000000000, 10000000000, 40000000000])
+    //     .range(["rgb(247,251,255)", "rgb(222,235,247)", "rgb(198,219,239)", "rgb(158,202,225)",
+    //         "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)",
+    //         "rgb(8,48,107)", "rgb(3,19,43)"]);
 
     var path = d3.geoPath();
 
@@ -47,13 +47,19 @@ function draw_maps(world, population) {
     population.forEach(function (d) { populationById[d.id] = +d.value; });
     data.features.forEach(function (d) { d.population = populationById[parseInt(d.id)] });
 
+    var color = d3.scaleOrdinal(d3.schemeCategory20b)
+    .domain([d3.min(data, function (d) { return d.population; }), d3.max(data, function (d) { return d.population; })]);
+
     svg.append("g")
         .attr("class", "countries")
         .selectAll("path")
         .data(data.features)
         .enter().append("path")
         .attr("d", path)
-        .style("fill", function (d) { return color(populationById[parseInt(d.id)]); })
+        // .style("fill", function (d) { return color(populationById[parseInt(d.id)]); })
+        .style('fill', function (d, i) {
+			return color(d.population);
+		})
         .style('stroke', 'white')
         .style('stroke-width', 1.5)
         .style("opacity", 0.8)

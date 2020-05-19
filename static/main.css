@@ -37,6 +37,20 @@ div.bar-chart{
     left: 52%;
 }
 
+/* div.selection{
+    margin-left: 71% ;
+    top: 10%;
+    position: absolute;
+    width: 25%;
+    height: 5%;
+}
+
+.selection select{
+    background-color: #6c757d;
+    text-emphasis-color: #dee2e6;
+    width: 25%;
+} */
+
 .selection button{
     background-color: #6c757d;
     text-emphasis-color: #dee2e6;
@@ -145,10 +159,6 @@ pointer-events:none;
 }
 
 
-.bar {
-    fill: steelblue;
-}
-
 .tooltip {
     position: absolute;
     width: 80px;
@@ -176,14 +186,18 @@ rect {
     stroke-width: 2;
 }
 
+.barScree {
+    fill: steelblue;
+}
+
 .line {
     fill: None;
-    stroke: steelblue;
+    stroke: rgb(11, 134, 235);
     stroke-width: 2;
 }
 
 .dot {
-    fill: steelblue;
+    fill: rgb(10, 55, 92);
     stroke: #fff;
 }
 

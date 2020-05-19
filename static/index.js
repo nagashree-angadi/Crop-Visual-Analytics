@@ -24,26 +24,6 @@ window.addEventListener("load", function () {
     });
 });
 
-// function updateGraphs() {
-
-//     var crop = document.getElementById("crop-selector").value;
-//     console.log(crop)
-
-//     $.get("/top-producers", { 'data': crop }, function (data) {
-//         console.log(data)
-//         draw_bar_chart(data)
-//     });
-
-//     // $.get("/production-by-year", { 'data': '4' }, function (data) {
-//     //     draw_line(data);
-//     // });
-
-//     $.get("/crop-by-continent", { 'data': crop }, function (data) {
-//         console.log(data)
-//         draw_pie_chart(data)
-//     });
-// }
-
 function updateLineChart(crop, country){
     $.get("/production-by-year", {'crop': crop , 'country': country}, function (data) {
         draw_line(data);
@@ -57,7 +37,7 @@ function updateBarChart(country){
 }
 
 function updatePieChart(crop){
-    $.get("/production-by-year", { 'data': crop }, function (data) {
+    $.get("/crop-by-continent", { 'data': crop }, function (data) {
         draw_pie_chart(data);
     });
 }
@@ -66,7 +46,6 @@ function screeplot()
 {
     $.get("/soil_data_screeplot", {'data': 'received'}, function (soil_data) {
         data = JSON.parse(soil_data.chart_data)
-        console.log(data)
         draw_screeplot(data)
     });
 }

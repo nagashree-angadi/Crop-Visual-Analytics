@@ -29,8 +29,10 @@ function draw_bar_chart(input) {
 
     var yScale = d3.scaleLinear()
         .domain([d3.min(data, function (d) { return d.value; }), d3.max(data, function (d) { return d.value; })])
-        .range([height, 0])
+        .range([height, 0]);
 
+    var color = d3.scaleOrdinal(d3.schemeCategory20b)
+        .domain([d3.min(data, function (d) { return d.value; }), d3.max(data, function (d) { return d.value; })]);
 
     var location = d3.select('#bar-chart')
     location.selectAll("svg").remove();
@@ -67,7 +69,13 @@ function draw_bar_chart(input) {
         .attr("x", function (d) { return xScale(d.key); })
         .attr("y", function (d) { return yScale(d.value); })
         .attr("width", xScale.bandwidth())
-        .attr("height", function (d) { return height - yScale(d.value); })
+        .attr("height", function (d) {
+            h = height - yScale(d.value)
+            if(h == 0)
+                h = 1; 
+            return h;
+        })
+        .attr("fill", function (d){ return color(d.value); })
         .on('click', function (d) {
             updateLineChart(d.key, country);
             updatePieChart(d.key);

@@ -91,10 +91,10 @@ function draw_screeplot(data2) {
         .attr("r", 3);
 
 
-    svg.selectAll(".bar")
+    svg.selectAll(".barScree")
         .data(data2)
         .enter().append("rect")
-        .attr("class", "bar")
+        .attr("class", "barScree")
         .attr("x", function (d) { return xScale(d.key); })
         .attr("y", function (d) { return yScale(d.value); })
         .attr("width", xScale.bandwidth())
