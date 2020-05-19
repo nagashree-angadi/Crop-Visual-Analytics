@@ -5,9 +5,15 @@ body{
 header{
     position: relative;
     text-align: center;
+    font-size: xx-large;
     color: whitesmoke;
     height: 10%;
 }
+
+div.selection{
+    font-size: large;
+}
+
 div.map-chart{
     /*border:1px solid steelblue;*/
     background-color: whitesmoke;
@@ -30,20 +36,6 @@ div.bar-chart{
     top: 8%;
     left: 52%;
 }
-
-/* div.selection{
-    margin-left: 71% ;
-    top: 10%;
-    position: absolute;
-    width: 25%;
-    height: 5%;
-}
-
-.selection select{
-    background-color: #6c757d;
-    text-emphasis-color: #dee2e6;
-    width: 25%;
-} */
 
 .selection button{
     background-color: #6c757d;
@@ -68,7 +60,7 @@ div.pie-chart{
     background-color: whitesmoke;
     border: 1px solid #e7e7e7;
     border-radius: 5px;
-    width: 49%;
+    width: 47%;
     height: 42%;
     position: absolute;
     top: 57%;

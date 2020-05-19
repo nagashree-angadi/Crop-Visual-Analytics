@@ -1,4 +1,8 @@
 function draw_bar_chart(input) {
+
+    var title = document.getElementById("pca-title")
+    title.innerText = "TOP 10 PRODUCERS OF CROP"
+
     data = input.chart_data
     country = input.country
     var barWidth = document.getElementById("bar-chart").offsetWidth;
@@ -20,7 +24,8 @@ function draw_bar_chart(input) {
 
 
     var location = d3.select('#bar-chart')
-    location.selectAll("svg").remove()
+    location.selectAll("svg").remove();
+    location.selectAll("div").remove();
 
     var svg = d3.select("#bar-chart").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -63,14 +68,15 @@ function draw_bar_chart(input) {
     svg.selectAll(".bar")
         .data(data)
         .enter().append("rect")
-        .transition()
-        .duration(400)
         .attr("class", "bar")
         .attr("x", function (d) { return xScale(d.key); })
         .attr("y", function (d) { return yScale(d.value); })
         .attr("width", xScale.bandwidth())
         .attr("height", function (d) { return height - yScale(d.value); })
-
+        .on('click', function (d) {
+            updateLineChart(d.key, country);
+            updatePieChart(d.key);
+        })
         .on("mousemove", function (d) {
             d3.select(this).style('fill', 'cadetblue')
             var xposSub = document.getElementById("bar-chart").getBoundingClientRect().left;
@@ -84,8 +90,5 @@ function draw_bar_chart(input) {
         .on("mouseout", function (d) {
             d3.select(this).style('fill', 'steelblue')
             tooltip.style("display", "none");
-        })
-        .on('click', function (d) {
-            updateLineChart(d.key, country);
         });
 }

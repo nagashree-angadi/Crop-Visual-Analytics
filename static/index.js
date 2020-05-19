@@ -56,8 +56,8 @@ function updateBarChart(country){
     });
 }
 
-function updatePieChart(country){
-    $.get("/production-by-year", { 'data': country }, function (data) {
+function updatePieChart(crop){
+    $.get("/production-by-year", { 'data': crop }, function (data) {
         draw_pie_chart(data);
     });
 }

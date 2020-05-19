@@ -11,19 +11,12 @@
 
 <body>
 	<header class="header">
-		<h2>CROP VISUAL ANALYTICS</h2>
-		<!-- <div class="selection">
-			<label for="crop-selector">Select crop: </label>
-			<select class="crop-selector" id="crop-selector" onchange="updateGraphs()">
-				{#			<option value = "Wheat">Wheat</option>#}
-				{#			<option value = "Paddy/Rice">Paddy/Rice</option>#}
-				{#			<option value = "Millet">Millet</option>#}
-				{#			<option value = "Pulses">Pulses</option>#}
-				{#			<option value = "Maize">Maize</option>#}
-			</select>-->
-
-            <button type="button" onclick="screeplot()">Soil Data PCA Analysis</button>
-		</div>
+			<div>
+				<b>CROP VISUAL ANALYTICS</b>
+				<div class="selection" onclick="screeplot()" style="float: right;">
+					SOIL DATA PCA ANALYSIS
+				</div>
+			</div>
 	</header>
 
 	<div class="map-chart" id="map-chart">
