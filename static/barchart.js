@@ -1,7 +1,7 @@
 function draw_bar_chart(input) {
 
     var title = document.getElementById("pca-title")
-    title.innerText = "TOP 10 PRODUCERS OF CROP"
+    title.innerText = "TOP 10 CROPS PRODUCED"
 
     var format = d3.format(",");
     var tip = d3.tip()
