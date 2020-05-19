@@ -106,6 +106,6 @@ if __name__ == "__main__":
     geodata_file = open('./static/Data/countries-50m.json',)
     countries_geodata = json.load(geodata_file)
     geodata_file.close() 
-    app.run(debug=True, port=8005)
+    app.run(debug=True, port=8006)
 
 
