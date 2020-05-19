@@ -17,7 +17,7 @@ window.addEventListener("load",function() {
         draw_bar_chart(data)
     });
 
-    $.get("/production-by-year", {'data': 'Wheat'}, function(data) {
+    $.get("/production-by-year", {'data': '4'}, function(data) {
         draw_line(data);
     });
 
@@ -37,7 +37,7 @@ function updateGraphs() {
         draw_bar_chart(data)
     });
 
-    $.get("/production-by-year", {'data': crop}, function (data) {
+    $.get("/production-by-year", {'data': '4'}, function (data) {
         draw_line(data);
     });
 
