@@ -57,6 +57,7 @@ div.line-chart{
 }
 div.pie-chart{
     /*border:1px solid steelblue;*/
+    text-align: center;
     background-color: whitesmoke;
     border: 1px solid #e7e7e7;
     border-radius: 5px;
@@ -142,4 +143,36 @@ pointer-events:none;
 
 .details{
     color:white;
+}
+
+
+.bar {
+    fill: steelblue;
+}
+
+.tooltip {
+    position: absolute;
+    width: 80px;
+    background: #eee;
+    color: #333;
+    display: none;
+    font-size: 12px;
+    text-align: center;
+}
+
+rect {
+    cursor: pointer;
+    stroke-width: 2;
+}
+
+rect.disabled {
+    fill: transparent !important;
+}
+
+legend {
+    font-size: 18px;
+}
+
+rect {
+    stroke-width: 2;
 }

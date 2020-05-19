@@ -6,6 +6,10 @@ import json
 
 app = Flask(__name__)
 
+data = pd.read_csv("./static/Data/PreprocessedData.csv")
+continent_data = pd.read_csv("./static/Data/PreprocessedDataContinent.csv")
+geodata_file = open('./static/Data/countries-50m.json', )
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -46,8 +50,8 @@ def top_producers():
         for country,value in df.values:
             res.append(
             {
-                "country" : country,
-                "value" : value
+                "Country" : country,
+                "Value" : value
             })
         
         return jsonify(res)
@@ -86,16 +90,23 @@ def crop_by_continent():
         for continent,value in df.values:
             res.append(
             {
-                "continent" : continent,
-                "value" : value
+                "Continent" : continent,
+                "Value" : value,
+                "enabled" : True
             })
         return jsonify(res)
+
 
 # Getting crops to fill the drop down
 @app.route('/crop-names', methods=['POST', 'GET'])
 def countries():
     if request.method == 'GET':
-        return data["Crop"].unique()
+        all_crop_names = data["Crop"].unique()
+        res = []
+        for crop in all_crop_names:
+            res.append(crop)
+        ret_data = {'res': res}
+        return jsonify(ret_data)
 
 
 if __name__ == "__main__":
