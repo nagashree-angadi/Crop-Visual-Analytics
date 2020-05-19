@@ -44,6 +44,12 @@ div.selection{
     width: 25%;
 }
 
+.selection button{
+    background-color: #6c757d;
+    text-emphasis-color: #dee2e6;
+}
+
+
 div.line-chart{
     /*border:1px solid steelblue;*/
     background-color: whitesmoke;
@@ -175,4 +181,19 @@ legend {
 
 rect {
     stroke-width: 2;
+}
+
+.line {
+    fill: None;
+    stroke: steelblue;
+    stroke-width: 2;
+}
+
+.dot {
+    fill: steelblue;
+    stroke: #fff;
+}
+
+.elbowbar {
+    fill: darkred;
 }

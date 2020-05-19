@@ -21,6 +21,8 @@
 				{#			<option value = "Pulses">Pulses</option>#}
 				{#			<option value = "Maize">Maize</option>#}
 			</select>
+
+            <button type="button" onclick="screeplot()">Soil Data PCA Analysis</button>
 		</div>
 	</header>
 
@@ -28,7 +30,7 @@
 		<h3>TOTAL CROP PRODUCTION PER COUNTRY</h3>
 	</div>
 	<div class="bar-chart" id="bar-chart">
-		<h3>TOP 10 PRODUCERS OF CROP</h3>
+		<h3 id = "pca-title">TOP 10 PRODUCERS OF CROP</h3>
 	</div>
 	<div class="line-chart" id="line-chart">
 		<h3>CROP PRODUCTION BY YEAR</h3>
@@ -44,6 +46,7 @@
 	<script src="../static/lines.js"></script>
 	<script src="../static/barchart.js"></script>
 	<script src="../static/piechart.js"></script>
+    <script src="../static/screeplot.js"></script>
 </body>
 
 </html>

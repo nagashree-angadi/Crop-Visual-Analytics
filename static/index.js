@@ -51,3 +51,12 @@ function updateLineChart(country){
         draw_line(data);
     });
 }
+
+function screeplot()
+{
+    $.get("/soil_data_screeplot", {'data': 'received'}, function (soil_data) {
+        data = JSON.parse(soil_data.chart_data)
+        console.log(data)
+        draw_screeplot(data)
+    });
+}
