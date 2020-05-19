@@ -3,6 +3,15 @@ function draw_bar_chart(input) {
     var title = document.getElementById("pca-title")
     title.innerText = "TOP 10 PRODUCERS OF CROP"
 
+    var format = d3.format(",");
+    var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([0, -1])
+        .html(function (d) {
+            return "<strong>Year: </strong><span class='details'>" + d.key + "<br></span>" +
+                "<strong>Produce: </strong><span class='details'>" + format(d.value) + "</span>";
+        })
+    
     data = input.chart_data
     country = input.country
     var barWidth = document.getElementById("bar-chart").offsetWidth;
@@ -34,7 +43,7 @@ function draw_bar_chart(input) {
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
-    var tooltip = d3.select("#bar-chart").append("div").attr("class", "tooltip");
+    svg.call(tip);
 
     svg.append("g")
         .attr("class", "axis")
@@ -47,23 +56,9 @@ function draw_bar_chart(input) {
         .attr("transform", "rotate(40)")
         .style("text-anchor", "start");
 
-    // svg.append("text")
-    //     .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 60) + ")")
-    //     .style("text-anchor", "middle")
-    //     .text("key");
-
     svg.append("g")
         .attr("class", "axis")
         .call(d3.axisLeft(yScale).tickFormat(d3.formatPrefix(".0", 1e6)));
-
-    // svg.append("text")
-    //     .attr("transform", "rotate(-90)")
-    //     .attr("y", 0 - margin.left)
-    //     .attr("x", 0 - (height / 2))
-    //     .attr("dy", "1em")
-    //     .style("text-anchor", "middle")
-    //     .text("Production");
-
 
     svg.selectAll(".bar")
         .data(data)
@@ -77,18 +72,10 @@ function draw_bar_chart(input) {
             updateLineChart(d.key, country);
             updatePieChart(d.key);
         })
-        .on("mousemove", function (d) {
-            d3.select(this).style('fill', 'cadetblue')
-            var xposSub = document.getElementById("bar-chart").getBoundingClientRect().left;
-            var xpos = d3.event.x - xposSub
-            var ypos = d3.event.y
-            tooltip.style("left", xpos + "px")
-            tooltip.style("top", ypos + "px")
-            tooltip.html((d.key) + "<br>" + (d.value));
-            tooltip.style("display", "block");
+        .on('mouseover', function (d){
+            tip.show(d);
         })
-        .on("mouseout", function (d) {
-            d3.select(this).style('fill', 'steelblue')
-            tooltip.style("display", "none");
+        .on('mouseout', function (d) {
+            tip.hide(d);
         });
 }

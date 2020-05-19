@@ -1,7 +1,8 @@
 function draw_pie_chart(data) {
 	var margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
-	var width = 280 - margin.left - margin.right;
+	var pieWidth = document.getElementById("pie-chart").offsetWidth;
+	var width = pieWidth - margin.left - margin.right;
 	var height = 280 - margin.top - margin.bottom;
 	var fullWidth = width + margin.left + margin.right;
 	var fullHeight = height + margin.top + margin.bottom;
@@ -9,18 +10,7 @@ function draw_pie_chart(data) {
 
 	var color = d3.scaleOrdinal(d3.schemeCategory20b);
 
-	var location = d3.select('#pie-chart')
-	location.selectAll("svg").remove()
-
-	var svg = d3.select("#pie-chart").append("svg")
-		.attr("width", fullWidth)
-		.attr("height", fullHeight);
-
-	var g = svg.append("g")
-		.attr("transform", "translate(" + (fullWidth / 2) + "," + (fullHeight / 2) + ")")
-		.attr("class", "chartGroup");
-
-	var donutWidth = (width / 4);
+	var donutWidth = 60;
 
 	var arc = d3.arc()
 		.innerRadius(donutWidth)
@@ -30,18 +20,27 @@ function draw_pie_chart(data) {
 		.value(function (d) { return d.Value })
 		.sort(null);
 
-	var tooltip = d3.select('#pie-chart')
-		.append('div')
-		.attr('class', 'tooltip')
+	var format = d3.format(",");
+	var tip = d3.tip()
+		.attr('class', 'd3-tip')
+		.offset([0, 0])
+		.html(function (d) {
+			return "<strong>Continent: </strong><span class='details'>" + d.data.Continent + "<br></span>" +
+				"<strong>Produce: </strong><span class='details'>" + format(d.data.Value) + "</span>";
+		});
 
-	tooltip.append('div')
-		.attr('class', 'Continent');
-	tooltip.append('div')
-		.attr('class', 'Value');
-	tooltip.append('div')
-		.attr('class', 'percent');
+	var location = d3.select('#pie-chart')
+	location.selectAll("svg").remove()
 
+	var svg = d3.select("#pie-chart").append("svg")
+		.attr("width", fullWidth)
+		.attr("height", fullHeight);
 
+	svg.call(tip);
+
+	var g = svg.append("g")
+		.attr("transform", "translate(" + ((fullWidth-radius) / 2) + "," + (fullHeight / 2) + ")")
+		.attr("class", "chartGroup");
 
 	var path = g.selectAll('path')
 		.data(pie(data))
@@ -53,33 +52,19 @@ function draw_pie_chart(data) {
 		})
 		.each(function (d) { this._current = d; });
 
-	path.on('mousemove', function (d) {
-		var xposSub = document.getElementById("pie-chart").getBoundingClientRect().left;
-		var xpos = d3.event.x - xposSub
-		var ypos = d3.event.y - 400
-		tooltip.style("left", xpos + "px")
-		tooltip.style("top", ypos + "px")
-		var total = d3.sum(data.map(function (d) {
-			return (d.enabled) ? d.Value : 0;
-		}));
-		var percent = Math.round((d.data.Value / total) * 100)
-		tooltip.select('.Continent').html(d.data.Continent);
-		tooltip.select('.Value').html(d.data.Value);
-		tooltip.select('.percent').html(percent + '%');
-		tooltip.style('display', 'inline-block');
-	});
-
-
-
-	path.on('mouseout', function (d) {
-		tooltip.style('display', 'none');
-
-	});
+		path.on('mouseover', function (d){
+            tip.show(d);
+        })
+        .on('mouseout', function (d) {
+            tip.hide(d);
+		});
+		
 
 	var legendRectSize = 10;
 	var legendSpacing = 5;
 
-	var legend = g.selectAll('.legend')
+	var legend = svg.selectAll('.legend')
+		
 		.data(color.domain())
 		.enter()
 		.append('g')
@@ -87,10 +72,11 @@ function draw_pie_chart(data) {
 		.attr('transform', function (d, i) {
 			var height = legendRectSize + legendSpacing;
 			var offset = height * color.domain().length / 2;
-			var horz = -2 * legendRectSize;
-			var vert = i * height - offset;
+			var horz = (fullWidth+radius)/2 +2 * legendRectSize;
+			var vert = fullHeight/3 + i * height - offset;
 			return 'translate(' + horz + ',' + vert + ')';
-		});
+		})
+		.attr("class", "chartGroup");
 
 	legend.append('rect')
 		.attr('width', legendRectSize)

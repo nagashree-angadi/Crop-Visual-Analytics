@@ -1,7 +1,6 @@
 function draw_maps(world, population) {
     var format = d3.format(",");
 
-    // Set tooltips
     var tip = d3.tip()
         .attr('class', 'd3-tip')
         .offset([0, -1])
