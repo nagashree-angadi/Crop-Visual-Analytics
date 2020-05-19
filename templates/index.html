@@ -1,41 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
 	<meta charset="UTF-8">
-    <script src="../static/index.js"></script>
+	<script src="../static/index.js"></script>
 	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 	<link rel="stylesheet" href="../static/main.css">
 	<title>Crop Visual Analytics</title>
 </head>
+
 <body>
-	<header class = "header">
-	<h2>CROP VISUAL ANALYTICS</h2>
-	<div class = "selection">
-		<label for = "crop-selector">Select crop: </label>
-		<select class = "crop-selector" id = "crop-selector" onchange="updateGraphs()">
-{#			<option value = "Wheat">Wheat</option>#}
-{#			<option value = "Paddy/Rice">Paddy/Rice</option>#}
-{#			<option value = "Millet">Millet</option>#}
-{#			<option value = "Pulses">Pulses</option>#}
-{#			<option value = "Maize">Maize</option>#}
-		</select>
-	</div>	
+	<header class="header">
+		<h2>CROP VISUAL ANALYTICS</h2>
+		<div class="selection">
+			<label for="crop-selector">Select crop: </label>
+			<select class="crop-selector" id="crop-selector" onchange="updateGraphs()">
+				{#			<option value = "Wheat">Wheat</option>#}
+				{#			<option value = "Paddy/Rice">Paddy/Rice</option>#}
+				{#			<option value = "Millet">Millet</option>#}
+				{#			<option value = "Pulses">Pulses</option>#}
+				{#			<option value = "Maize">Maize</option>#}
+			</select>
+		</div>
 	</header>
-	
-	<div class = "map-chart" id = "map-chart">
+
+	<div class="map-chart" id="map-chart">
 		<h3>TOTAL CROP PRODUCTION PER COUNTRY</h3>
 	</div>
-	<div class = "bar-chart" id = "bar-chart">
-		<h3>TOP 20 PRODUCERS OF CROP</h3>
-
+	<div class="bar-chart" id="bar-chart">
+		<h3>TOP 10 PRODUCERS OF CROP</h3>
 	</div>
-	<div class = "line-chart" id = "line-chart">
+	<div class="line-chart" id="line-chart">
 		<h3>CROP PRODUCTION BY YEAR</h3>
-
 	</div>
-	<div class = "pie-chart" id = "pie-chart">
+	<div class="pie-chart" id="pie-chart">
 		<h3>CROP PRODUCTION BY CONTINENT</h3>
-
 	</div>
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<script src="https://d3js.org/queue.v1.min.js"></script>
@@ -44,6 +43,7 @@
 	<script src="../static/maps.js"></script>
 	<script src="../static/lines.js"></script>
 	<script src="../static/barchart.js"></script>
-    <script src="../static/piechart.js"></script>
+	<script src="../static/piechart.js"></script>
 </body>
+
 </html>

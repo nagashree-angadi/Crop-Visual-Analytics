@@ -10,6 +10,7 @@ data = pd.read_csv("./static/Data/PreprocessedData.csv")
 continent_data = pd.read_csv("./static/Data/PreprocessedDataContinent.csv")
 geodata_file = open('./static/Data/countries-50m.json', )
 
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -21,39 +22,40 @@ def allcrops_by_country():
 
         df = data[data.Type == "Yield"][["M49 Code", "Value"]]
         df = df.groupby(["M49 Code"]).sum().reset_index()
-        
+
         res = []
-        for country,value in df.values:
+        for country, value in df.values:
             res.append(
-            {
-                "id" : country,
-                "value" : value
-            })
+                {
+                    "id": country,
+                    "value": value
+                })
 
         return jsonify({
             "geodata": countries_geodata,
             "yeild": res
         })
 
-# Sending top 20 producers for given crop
+# Sending top 10 producers for given crop
 @app.route('/top-producers', methods=['POST', 'GET'])
 def top_producers():
     if request.method == 'GET':
-        crop = request.args.get('data',0)
+        crop = request.args.get('data', 0)
         print(crop)
 
         df = data[data.Type == "Production"]
         df = df[df.Crop == crop][["Country", "Value"]]
-        df = df.groupby("Country").sum().reset_index().sort_values("Value", ascending=False)[:20]
+        df = df.groupby("Country").sum().reset_index(
+        ).sort_values("Value", ascending=False)[:10]
 
         res = []
-        for country,value in df.values:
+        for country, value in df.values:
             res.append(
-            {
-                "Country" : country,
-                "Value" : value
-            })
-        
+                {
+                    "Country": country,
+                    "Value": value
+                })
+
         return jsonify(res)
 
 # Produce for particular crop per year
@@ -68,10 +70,10 @@ def production_by_year():
         res = []
         for year, value in df.values:
             res.append(
-            {
-                "year" : year,
-                "value" : value
-            })
+                {
+                    "year": year,
+                    "value": value
+                })
 
         return jsonify(res)
 
@@ -87,13 +89,13 @@ def crop_by_continent():
         df = df.groupby("Continent").sum().reset_index()
 
         res = []
-        for continent,value in df.values:
+        for continent, value in df.values:
             res.append(
-            {
-                "Continent" : continent,
-                "Value" : value,
-                "enabled" : True
-            })
+                {
+                    "Continent": continent,
+                    "Value": value,
+                    "enabled": True
+                })
         return jsonify(res)
 
 
@@ -116,7 +118,6 @@ if __name__ == "__main__":
     continent_data = pd.read_csv("./static/Data/PreprocessedDataContinent.csv")
     geodata_file = open('./static/Data/countries-50m.json',)
     countries_geodata = json.load(geodata_file)
-    geodata_file.close() 
-    app.run(debug=True, port=8008)
-
+    geodata_file.close()
+    app.run(debug=True, port=8009)
 

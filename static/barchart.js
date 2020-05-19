@@ -1,17 +1,21 @@
-function draw_bar_chart(data)
-{
-    var margin = {top: 1, right: 10, bottom: 90, left: 70},
-                width = 600 - margin.left - margin.right,
-                height = 280 - margin.top - margin.bottom;
+function draw_bar_chart(data) {
+
+    var barWidth = document.getElementById("bar-chart").offsetWidth;
+    var barHeight = document.getElementById("bar-chart").offsetHeight -
+        document.getElementById("bar-chart").children[0].offsetHeight - 40;
+
+    var margin = { top: 1, right: 20, bottom: 80, left: 58 },
+        width = barWidth - margin.left - margin.right,
+        height = barHeight - margin.top - margin.bottom;
 
     var xScale = d3.scaleBand()
-        .domain(data.map(function(d) { return d.Country; }))
+        .domain(data.map(function (d) { return d.Country; }))
         .range([0, width])
         .padding(0.1);
 
 
     var yScale = d3.scaleLinear()
-        .domain([d3.min(data, function(d) { return d.Value; }), d3.max(data, function(d) { return d.Value; })])
+        .domain([d3.min(data, function (d) { return d.Value; }), d3.max(data, function (d) { return d.Value; })])
         .range([height, 0])
 
 
@@ -23,7 +27,7 @@ function draw_bar_chart(data)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+            "translate(" + margin.left + "," + margin.top + ")");
 
     var tooltip = d3.select("#bar-chart").append("div").attr("class", "tooltip");
 
@@ -31,7 +35,7 @@ function draw_bar_chart(data)
         .attr("class", "axis")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(xScale))
-    .selectAll("text")
+        .selectAll("text")
         .attr("y", 0)
         .attr("x", 9)
         .attr("dy", ".35em")
@@ -47,14 +51,13 @@ function draw_bar_chart(data)
         .attr("class", "axis")
         .call(d3.axisLeft(yScale).tickFormat(d3.formatPrefix(".0", 1e6)));
 
-
-    svg.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left)
-        .attr("x",0 - (height / 2))
-        .attr("dy", "1em")
-        .style("text-anchor", "middle")
-        .text("Production");
+    // svg.append("text")
+    //     .attr("transform", "rotate(-90)")
+    //     .attr("y", 0 - margin.left)
+    //     .attr("x", 0 - (height / 2))
+    //     .attr("dy", "1em")
+    //     .style("text-anchor", "middle")
+    //     .text("Production");
 
 
     svg.selectAll(".bar")
@@ -66,17 +69,17 @@ function draw_bar_chart(data)
         .attr("width", xScale.bandwidth())
         .attr("height", function (d) { return height - yScale(d.Value); })
 
-        .on("mousemove", function(d){
+        .on("mousemove", function (d) {
             d3.select(this).style('fill', 'cadetblue')
             var xposSub = document.getElementById("bar-chart").getBoundingClientRect().left;
-          var xpos = d3.event.x - xposSub
-          var ypos = d3.event.y
-          tooltip.style("left" ,xpos + "px")
-          tooltip.style("top", ypos + "px")
+            var xpos = d3.event.x - xposSub
+            var ypos = d3.event.y
+            tooltip.style("left", xpos + "px")
+            tooltip.style("top", ypos + "px")
             tooltip.html((d.Country) + "<br>" + (d.Value));
-          tooltip.style("display", "block");
+            tooltip.style("display", "block");
         })
-        .on("mouseout", function(d){
+        .on("mouseout", function (d) {
             d3.select(this).style('fill', 'steelblue')
             tooltip.style("display", "none");
         });
