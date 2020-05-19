@@ -76,7 +76,8 @@ function draw_maps(world, population) {
                 .style("stroke-width", 0.3);
         })
         .on('click', function (d) {
-            updateLineChart(d.id);
+            updateLineChart("Wheat", d.id);
+            updateBarChart(d.id);
         });
 
     svg.append("path")

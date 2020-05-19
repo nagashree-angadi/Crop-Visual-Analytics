@@ -1,9 +1,6 @@
 function draw_pie_chart(data) {
 	var margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
-	var pieWidth = document.getElementById("pie-chart").offsetWidth;
-    var pieHeight = document.getElementById("pie-chart").offsetHeight -
-        document.getElementById("pie-chart").children[0].offsetHeight - 40;
 	var width = 280 - margin.left - margin.right;
 	var height = 280 - margin.top - margin.bottom;
 	var fullWidth = width + margin.left + margin.right;

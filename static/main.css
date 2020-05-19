@@ -1,16 +1,17 @@
 body{
-    background-color: #c6c8ca;
+    background-color: #171447;
 }
 
 header{
     position: relative;
     text-align: center;
+    color: whitesmoke;
     height: 10%;
 }
 div.map-chart{
     /*border:1px solid steelblue;*/
     background-color: whitesmoke;
-    border: 1px solid #e7e7e7;
+    border: 1px solid #171447;
     border-radius: 5px;
     height: 56%;
     width: 50%;
@@ -21,7 +22,7 @@ div.map-chart{
 div.bar-chart{
     /*border:1px solid steelblue;*/
     background-color: whitesmoke;
-    border: 1px solid #e7e7e7;
+    border: 1px solid #dadafc;
     border-radius: 5px;
     width: 47%;
     height: 47%;
@@ -30,7 +31,7 @@ div.bar-chart{
     left: 52%;
 }
 
-div.selection{
+/* div.selection{
     margin-left: 71% ;
     top: 10%;
     position: absolute;
@@ -42,7 +43,7 @@ div.selection{
     background-color: #6c757d;
     text-emphasis-color: #dee2e6;
     width: 25%;
-}
+} */
 
 div.line-chart{
     /*border:1px solid steelblue;*/

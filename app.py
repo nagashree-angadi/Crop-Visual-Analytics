@@ -36,35 +36,39 @@ def allcrops_by_country():
             "yeild": res
         })
 
-# Sending top 10 producers for given crop
+# Sending top 10 crops for given country
 @app.route('/top-producers', methods=['POST', 'GET'])
 def top_producers():
     if request.method == 'GET':
-        crop = request.args.get('data', 0)
-        print(crop)
+        country = request.args.get('data', 0)
+        print(country)
 
         df = data[data.Type == "Production"]
-        df = df[df.Crop == crop][["Country", "Value"]]
-        df = df.groupby("Country").sum().reset_index(
-        ).sort_values("Value", ascending=False)[:10]
-
+        df = df[df["M49 Code"] == int(country)][["Crop", "Value"]]
+        df = df.groupby("Crop").sum().reset_index().sort_values("Value", ascending=False)[:11]
+       
         res = []
-        for country, value in df.values:
-            res.append(
-                {
-                    "Country": country,
-                    "Value": value
-                })
+        for crop, value in df.values:
+            if crop != "0":
+                res.append(
+                    {
+                        "key": crop,
+                        "value": value,
+                    })
 
-        return jsonify(res)
+        return jsonify({
+            "country": int(country),
+            "chart_data": res
+        })
 
-# Produce for particular crop per year
+# Produce for particular crop, particular country per year
 @app.route('/production-by-year', methods=['POST', 'GET'])
 def production_by_year():
     if request.method == 'GET':
-        country = request.args.get('data', 0)
-        print("*********"+country)
+        crop = request.args.get('crop', 0)
+        country = request.args.get('country', 0)
         df = data[data.Type == "Production"]
+        df = df[df["Crop"] == crop]
         df = df[df["M49 Code"] == int(country)][["Year", "Value"]]
         df = df.groupby("Year").sum().reset_index()
         res = []

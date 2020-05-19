@@ -1,5 +1,6 @@
-function draw_bar_chart(data) {
-
+function draw_bar_chart(input) {
+    data = input.chart_data
+    country = input.country
     var barWidth = document.getElementById("bar-chart").offsetWidth;
     var barHeight = document.getElementById("bar-chart").offsetHeight -
         document.getElementById("bar-chart").children[0].offsetHeight - 40;
@@ -9,13 +10,12 @@ function draw_bar_chart(data) {
         height = barHeight - margin.top - margin.bottom;
 
     var xScale = d3.scaleBand()
-        .domain(data.map(function (d) { return d.Country; }))
+        .domain(data.map(function (d) { return d.key; }))
         .range([0, width])
         .padding(0.1);
 
-
     var yScale = d3.scaleLinear()
-        .domain([d3.min(data, function (d) { return d.Value; }), d3.max(data, function (d) { return d.Value; })])
+        .domain([d3.min(data, function (d) { return d.value; }), d3.max(data, function (d) { return d.value; })])
         .range([height, 0])
 
 
@@ -45,7 +45,7 @@ function draw_bar_chart(data) {
     // svg.append("text")
     //     .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 60) + ")")
     //     .style("text-anchor", "middle")
-    //     .text("Country");
+    //     .text("key");
 
     svg.append("g")
         .attr("class", "axis")
@@ -64,10 +64,10 @@ function draw_bar_chart(data) {
         .data(data)
         .enter().append("rect")
         .attr("class", "bar")
-        .attr("x", function (d) { return xScale(d.Country); })
-        .attr("y", function (d) { return yScale(d.Value); })
+        .attr("x", function (d) { return xScale(d.key); })
+        .attr("y", function (d) { return yScale(d.value); })
         .attr("width", xScale.bandwidth())
-        .attr("height", function (d) { return height - yScale(d.Value); })
+        .attr("height", function (d) { return height - yScale(d.value); })
 
         .on("mousemove", function (d) {
             d3.select(this).style('fill', 'cadetblue')
@@ -76,11 +76,14 @@ function draw_bar_chart(data) {
             var ypos = d3.event.y
             tooltip.style("left", xpos + "px")
             tooltip.style("top", ypos + "px")
-            tooltip.html((d.Country) + "<br>" + (d.Value));
+            tooltip.html((d.key) + "<br>" + (d.value));
             tooltip.style("display", "block");
         })
         .on("mouseout", function (d) {
             d3.select(this).style('fill', 'steelblue')
             tooltip.style("display", "none");
+        })
+        .on('click', function (d) {
+            updateLineChart(d.key, country);
         });
 }
