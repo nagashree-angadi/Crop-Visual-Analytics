@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 from flask import Flask, request, jsonify
 from flask import render_template
+from sklearn.preprocessing import StandardScaler
+from sklearn import preprocessing
+from sklearn.decomposition import PCA
 import json
 
 app = Flask(__name__)
@@ -9,6 +12,42 @@ app = Flask(__name__)
 data = pd.read_csv("./static/Data/PreprocessedData.csv")
 continent_data = pd.read_csv("./static/Data/PreprocessedDataContinent.csv")
 geodata_file = open('./static/Data/countries-50m.json', )
+soil_data = pd.read_csv("./static/Data/Soil_Microbial_Biomass_C_N_P_spatial.csv", encoding = "ISO-8859-1")
+
+
+
+for col in soil_data.columns:
+    if soil_data[col].dtype != 'object':
+        soil_data[col] = soil_data[col].fillna(soil_data[col].median())
+    else:
+        encoder = preprocessing.LabelEncoder()
+        encoder.fit(list(soil_data[col].values))
+        soil_data[col] = encoder.transform(list(soil_data[col].values))
+
+
+def find_cumulative(values):
+    num = 0
+    output = []
+    for val in values:
+        num += val
+        output.append(num)
+    return output
+
+
+def find_intrinsic_dimensions(df):
+    x = df
+    x = StandardScaler().fit_transform(x)
+    pca = PCA()
+    pca.fit_transform(x)
+    eigenvalues = pca.explained_variance_
+    eigenvalues = sorted(eigenvalues, reverse=True)
+    cumulative = find_cumulative(eigenvalues)
+    result_frame = pd.DataFrame()
+    result_frame['key'] = list(range(1, len(eigenvalues)+1))
+    result_frame['value'] = eigenvalues
+    result_frame['cumulative'] = cumulative
+    return result_frame
+
 
 
 @app.route("/")
@@ -113,6 +152,15 @@ def countries():
             res.append(crop)
         ret_data = {'res': res}
         return jsonify(ret_data)
+
+@app.route('/soil_data_screeplot', methods=['POST', 'GET'])
+def soil_data_analysis():
+    if request.method == 'GET':
+        resp_data = find_intrinsic_dimensions(soil_data)
+        chart_data = resp_data.to_dict(orient='records')
+        chart_data = json.dumps(chart_data, indent=2)
+        vals = {'chart_data': chart_data}
+        return jsonify(vals)
 
 
 if __name__ == "__main__":
