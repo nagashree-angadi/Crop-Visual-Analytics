@@ -12,7 +12,8 @@ Dashboard to analyze crop production in different regions across the world.
 - A Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus Data from NASA Earth data 
 
 ## How to run the program?
-python app.py
+- Run python app.py in project root folder
+- Go to http:/localhost:8000
 
 ## Techonologies Used
 ![Technologies](https://github.com/nagashree-angadi/Visualization-Final-Project/blob/master/Screen%20Shot%202020-05-19%20at%208.21.07%20PM.png)
